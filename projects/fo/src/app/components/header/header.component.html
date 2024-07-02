@@ -1,0 +1,21 @@
+<header>
+  <mat-toolbar class="primary-toolbar" >
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <ul>
+      <li *ngFor="let item of menuItems">
+        <!-- <a routerLink="{{ item.path }}" >{{ item.label }}</a> -->
+        <a [routerLink]="item.path" routerLinkActive="active">{{ item.label }}</a>
+      </li>
+    </ul>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+</header>
