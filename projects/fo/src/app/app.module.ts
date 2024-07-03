@@ -14,6 +14,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { GetStartedComponent } from './pages/get-started/get-started.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MaterialModule } from './modules/material/material.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   // load "html" class
@@ -28,7 +29,8 @@ import { MaterialModule } from './modules/material/material.module';
     AppRoutingModule,
     // ExponentialStrengthPipe // => @Pipe({ standalone: true }} = like a mini module
     ThemeModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
   // public features, just FYI (sample)
   exports: [

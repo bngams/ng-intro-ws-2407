@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class GetStartedComponent {
 
-  constructor( private router: Router) { }
+  constructor(private router: Router) { }
 
   title = 'fo'; // title: string => implicit typing with assignation
   today = new Date(); // today: Date => implicit typing with assignation

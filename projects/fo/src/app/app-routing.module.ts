@@ -7,7 +7,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 const routes: Routes = [
   // http://localhost:4200/home
   { path: 'home', component: HomeComponent },
-  { path: 'get-started', component: GetStartedComponent },
+  { path: 'get-started', component: GetStartedComponent, /*canActivate: [LoginGuard, ...]*/ },
   { path: 'products', loadChildren: () => import('./modules/product/product.module').then(result => result.ProductModule) },
   // http://localhost:4200 to http://localhost:4200/home
   { path: '', redirectTo: '/home', pathMatch:'full' },
