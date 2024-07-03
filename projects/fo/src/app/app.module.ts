@@ -9,26 +9,26 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { HeaderComponent } from './components/header/header.component';
+import { ThemeModule } from './modules/theme/theme.module';
 import { HomeComponent } from './pages/home/home.component';
 import { GetStartedComponent } from './pages/get-started/get-started.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { MaterialModule } from './modules/material/material.module';
 
 @NgModule({
   // load "html" class
   declarations: [
     AppComponent,
     ExponentialStrengthPipe, // => @Pipe({ standalone: false }}
-    SelectDirective, HeaderComponent, HomeComponent, GetStartedComponent, NotFoundComponent
+    SelectDirective, HomeComponent, GetStartedComponent, NotFoundComponent
   ],
   // load modules
   imports: [
     BrowserModule, // => CommonModule exports
     AppRoutingModule,
     // ExponentialStrengthPipe // => @Pipe({ standalone: true }} = like a mini module
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule
+    ThemeModule,
+    MaterialModule
   ],
   // public features, just FYI (sample)
   exports: [

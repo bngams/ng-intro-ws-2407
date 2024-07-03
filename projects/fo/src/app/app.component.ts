@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuItems } from './models/menu-item';
+import { MenuItems } from './modules/theme/models/menu-item';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ export class AppComponent {
   menuItems: MenuItems = [
     { path: '/home', label: 'Home'},
     { path: '/get-started', label: 'GetStarted'},
-    { path: '/other', label: 'Other'}
+    { path: '/products', label: 'Products'}
   ];
-  
+
 }
