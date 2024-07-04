@@ -4,32 +4,38 @@ import { Product } from '../models/product';
 import { PRODUCTS_MOCK } from '../mocks/products.mock';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
-// import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { ProductApiResponse } from '../models/products-api-response';
 
-const environment = {
-  apiBaseUrl: 'http://localhost:4200'
-}
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // root context => available everywhere
 })
 export class ProductService {
 
-  products: Product[] = PRODUCTS_MOCK;
+  products = PRODUCTS_MOCK;
 
   product$: Subject<Product> = new Subject();
 
   // BehaviorSubject (can be setup with an initial value)
   products$: BehaviorSubject<Product[]> = new BehaviorSubject(PRODUCTS_MOCK);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    // init possible (classic object lifecycle)
+    this.testSubscribeOnProducts$();
+    this.loadProducts();
+  }
+
+  testSubscribeOnProducts$(): void {
+    this.products$.subscribe((data) => {
+      console.log('DATA FROM products$ subscribe', data);
+    })
+  }
 
   loadProducts(): void {
     // es5 syntax
     // this.http.get(environment.apiBaseUrl + '/products');
-    const observable: Observable<any> = this.http.get(`${environment.apiBaseUrl}/products`);
-    observable.subscribe((res) => {
-      this.products = res.products;
+    this.http.get(`${environment.apiBaseUrl}/products`).subscribe((data: any) => {
+      this.products = data.products;
     })
   }
 
@@ -43,8 +49,9 @@ export class ProductService {
   }
 
   getProductsAsObservableProducts(): Observable<Product[]> {
-    return this.http.get<ProductApiResponse>(`${environment.apiBaseUrl}/products`).pipe(
-      map(res => res.products)
+    return this.http.get<ProductApiResponse>(`${environment.apiBaseUrl}/products`)
+    .pipe(
+      map((data: ProductApiResponse): Product[] => data.products)
     );
   }
 }

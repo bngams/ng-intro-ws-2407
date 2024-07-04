@@ -1,7 +1,7 @@
-<form>
+<form [formGroup]="productForm" (ngSubmit)="submit()">
   <mat-form-field class="example-full-width">
     <mat-label>Name</mat-label>
-    <input matInput placeholder="" name="title"/>
+    <input matInput placeholder="" name="title" formControlName="title" />
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
@@ -11,6 +11,7 @@
       matInput
       placeholder=""
       name="price"
+      formControlName="price"
     />
   </mat-form-field>
 
@@ -18,6 +19,7 @@
     mat-raised-button
     color="primary"
     type="submit"
+    [disabled]="!productForm.valid"
   >
     Add
   </button>

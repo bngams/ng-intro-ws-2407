@@ -12,4 +12,4 @@ export type ApiResponse = {
 // https://stackoverflow.com/questions/41385059/possible-to-extend-types-in-typescript
 export type ProductApiResponse = ApiResponse & {
   products: Product[]  // or Partial<Product> or T extends Products
-} 
+}

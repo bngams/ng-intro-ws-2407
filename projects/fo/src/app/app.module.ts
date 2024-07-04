@@ -14,7 +14,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { GetStartedComponent } from './pages/get-started/get-started.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MaterialModule } from './modules/material/material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   // load "html" class
@@ -38,7 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
     // AppRoutingModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    // provideHttpClient(), // replace HttpClientModule since angular 18
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
@@ -27,50 +27,62 @@ export type ControlsOf<T extends Record<string, any>> = {
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss']
 })
-export class ProductFormComponent {
+export class ProductFormComponent implements OnInit {
 
-  private submitMode: SUBMIT_MODE = SUBMIT_MODE.SERVICE_SUBJECT;
+  private submitMode = SUBMIT_MODE.OUTPUT;
 
   @Output()
-  productSubmit: EventEmitter<Product> = new EventEmitter();
+  productSubmit = new EventEmitter<Product>();
 
   // create object form
   // untyped => new UntypedFormGroup({
   // with type => (since angular 14/15)
-  productForm = new FormGroup<ControlsOf<Product>>({
-    title: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3)]}),
-    price: new FormControl(0, {nonNullable: true, validators: [Validators.required, Validators.min(1)]})
-  });
+  productForm!: FormGroup;
 
+  // DI
   constructor(private productService: ProductService) { }
+
+  ngOnInit(): void {
+    this.createProductForm();
+  }
+
+  createProductForm(): void {
+    this.productForm = new FormGroup({
+      title: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3)]}),
+      price: new FormControl(0, {nonNullable: true, validators: [Validators.required, Validators.min(1)]})
+    });
+  }
 
   submit(): void {
     // let vs const
     const product: Product = this.productForm.value;
 
+    //this.productService.products.push(product)
+    this.submitWithServiceBehaviorSubject(product);
+
     // debugger vs console.log(product)
 
-    switch (this.submitMode) {
-      case SUBMIT_MODE.OUTPUT:
-        // with @Output()
-        this.submitWithOuput(product);
-        break;
-      case SUBMIT_MODE.SERVICE_SUBJECT:
-          // with service (@Injectable)
-          // product Simple Subject attribute
-          this.submitWithServiceSubject(product);
-          break;
-      case SUBMIT_MODE.SERVICE_BEHAV_SUBJECT:
-        // with service (@Injectable)
-        // product Behaviour Subject attribute
-        this.submitWithServiceBehaviorSubject(product);
-        break;
-      case SUBMIT_MODE.SERVICE_ATTR:
-      default:// with service (@Injectable)
-        // product attribute
-        this.productService.products.push(product);
-        break;
-    }
+    // switch (this.submitMode) {
+    //   case SUBMIT_MODE.OUTPUT:
+    //     // with @Output()
+    //     this.submitWithOuput(product);
+    //     break;
+    //   case SUBMIT_MODE.SERVICE_SUBJECT:
+    //       // with service (@Injectable)
+    //       // product Simple Subject attribute
+    //       this.submitWithServiceSubject(product);
+    //       break;
+    //   case SUBMIT_MODE.SERVICE_BEHAV_SUBJECT:
+    //     // with service (@Injectable)
+    //     // product Behaviour Subject attribute
+    //     this.submitWithServiceBehaviorSubject(product);
+    //     break;
+    //   case SUBMIT_MODE.SERVICE_ATTR:
+    //   default:// with service (@Injectable)
+    //     // product attribute
+    //     this.productService.products.push(product);
+    //     break;
+    // }
   }
 
   private submitWithOuput(product: Product): void {

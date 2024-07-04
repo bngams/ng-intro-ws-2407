@@ -33,14 +33,15 @@ export class ProductListComponent implements OnInit {
   loadModes = LOAD_MODE;
 
   // inject class ProductService
-  constructor(public productsService: ProductService) {
+  constructor(readonly productsService: ProductService) {
     // better to init in ngInit method (lifecycle hooks)
     // this.products = productsService.products;
   }
 
   ngOnInit(): void {
-    this.initData();
-    this.initListeners();
+    // this.initData();
+    // this.initListeners();
+    this.loadProducts();
   }
 
   // TODO: can be a global method from a common parent class
@@ -100,9 +101,9 @@ export class ProductListComponent implements OnInit {
 
     // syntaxe "simplifiée"
     this.productsService.getProducts().subscribe(
-      (res: ProductApiResponse) => {
-        console.log("res", res);
-        this.products = res.products;
+      (data: any) => {
+        console.log("data", data);
+        this.products = data.products;
         this.loading = false;
       }
     ).unsubscribe(); // /!\ unsubscribe
